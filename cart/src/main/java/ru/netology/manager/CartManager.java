@@ -1,50 +1,43 @@
 package ru.netology.manager;
 
+import lombok.Data;
 import ru.netology.domain.PurchaseItem;
 
+@Data
 public class CartManager {
-  private PurchaseItem[] items = new PurchaseItem[0];
+    private int numberLast = 10;
+    private PurchaseItem[] items = new PurchaseItem[0];
+    private PurchaseItem[] reverseResult = new PurchaseItem[0];
 
-  public void add(PurchaseItem item) {
-    // создаём новый массив размером на единицу больше
-    int length = items.length + 1;
-    PurchaseItem[] tmp = new PurchaseItem[length];
-    // itar + tab
-    // копируем поэлементно
-    // for (int i = 0; i < items.length; i++) {
-    //   tmp[i] = items[i];
-    // }
-    System.arraycopy(items, 0, tmp, 0, items.length);
-    // кладём последним наш элемент
-    int lastIndex = tmp.length - 1;
-    tmp[lastIndex] = item;
-    items = tmp;
-  }
-
-
-  public PurchaseItem[] getAll() {
-    PurchaseItem[] result = new PurchaseItem[items.length];
-    // перебираем массив в прямом порядке
-    // но кладём в результаты в обратном
-    for (int i = 0; i < result.length; i++) {
-      int index = items.length - i - 1;
-      result[i] = items[index];
+    public void add(PurchaseItem item) {
+        int length = items.length + 1;
+        PurchaseItem[] tmp = new PurchaseItem[length];
+        System.arraycopy(items, 0, tmp, 0, items.length);
+        int lastIndex = tmp.length - 1;
+        tmp[lastIndex] = item;
+        items = tmp;
     }
-    return result;
-  }
 
-  // наивная реализация
-  public void removeById(int id) {
-    int length = items.length - 1;
-    PurchaseItem[] tmp = new PurchaseItem[length];
-    int index = 0;
-    for (PurchaseItem item : items) {
-      if (item.getId() != id) {
-        tmp[index] = item;
-        index++;
-      }
+    public void reverse() {
+        PurchaseItem[] result = new PurchaseItem[items.length];
+        for (int i = 0; i < result.length; i++) {
+            int index = items.length - i - 1;
+            result[i] = items[index];
+        }
+        reverseResult = result;
     }
-    // меняем наши элементы
-    items = tmp;
-  }
+
+    public PurchaseItem[] showTheLast() {             //numberLast последних фильмов
+        PurchaseItem[] tneLast = new PurchaseItem[numberLast];
+        System.arraycopy(reverseResult, 0, tneLast, 0, numberLast);
+        return tneLast;
+    }
+
+    public PurchaseItem[] showAll() {// "если фильмов меньше 10, то выдаёте столько, сколько есть."
+        PurchaseItem[] showAll = new PurchaseItem[0];
+        showAll = reverseResult;
+        return showAll;
+    }
+
+
 }
