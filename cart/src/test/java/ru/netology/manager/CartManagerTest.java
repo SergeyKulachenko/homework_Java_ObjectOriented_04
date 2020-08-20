@@ -7,7 +7,7 @@ import ru.netology.domain.PurchaseItem;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class CartManagerTest {
-    private CartManager manager = new CartManager();
+    private CartManager manager = new CartManager(0);
     private PurchaseItem first = new PurchaseItem(1, 1, "first", 1, 1);
     private PurchaseItem second = new PurchaseItem(2, 2, "second", 1, 1);
     private PurchaseItem third = new PurchaseItem(3, 3, "third", 1, 1);
@@ -35,34 +35,41 @@ public class CartManagerTest {
         manager.add(tenth);
         manager.add(eleventh);
         manager.add(twelfth);
-        manager.reverse();
+        //      manager.reverse();
     }
 
     @Test
-    public void showTheLastTen() {     // последние 10 фильмов
-        PurchaseItem[] actual = manager.showTheLast();
-        PurchaseItem[] expected = new PurchaseItem[]{twelfth, eleventh, tenth, ninth, eighth,
-                seventh, sixth, fifth, fourth, third};
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void showTheLastFive() {     // последние 5 фильмов
-        manager.setNumberLast(5);
-        PurchaseItem[] actual = manager.showTheLast();
+    public void showTheLastFive() {     //через конструктор - последние 5 фильмов
+        CartManager last = new CartManager(5);
+        PurchaseItem[] actual = manager.getTheLast();
         PurchaseItem[] expected = new PurchaseItem[]{twelfth, eleventh, tenth, ninth, eighth};
         assertArrayEquals(expected, actual);
     }
 
-    @Test
-    public void showAll() {   //если закомить часть книг, то можно увидеть что
-        // "если фильмов меньше 10, то выдаёте столько, сколько есть."
-        PurchaseItem[] showAll = new PurchaseItem[0];
-        showAll = manager.showAll();
-        for (int i = 0; i < showAll.length; i++) {
-            PurchaseItem purchaseItem = showAll[i];
-            System.out.println(showAll[i]);
-        }
 
+    @Test
+    public void showTheLastSix() {     // последние 6 фильмов
+        manager.numLast(6);
+        PurchaseItem[] actual = manager.getTheLast();
+        PurchaseItem[] expected = new PurchaseItem[]{twelfth, eleventh, tenth, ninth, eighth,seventh};
+        assertArrayEquals(expected, actual);
     }
+
+    @Test
+    public void showTheLastTetn() {     // последние 10 фильмов
+        manager.numLast(10);
+        PurchaseItem[] actual = manager.getTheLast();
+        PurchaseItem[] expected = new PurchaseItem[]{twelfth, eleventh, tenth, ninth, eighth,
+                seventh, sixth, fifth, fourth, third};
+        assertArrayEquals(expected, actual);
+    }
+    @Test
+    public void showTheLast() {     // при наличии фильмов в ленте меньше запрашиваемых
+        manager.numLast(18);
+        PurchaseItem[] actual = manager.getTheLast();
+        PurchaseItem[] expected = new PurchaseItem[]{twelfth, eleventh, tenth, ninth, eighth,
+                seventh, sixth, fifth, fourth, third,second,first};
+        assertArrayEquals(expected, actual);
+    }
+
 }
