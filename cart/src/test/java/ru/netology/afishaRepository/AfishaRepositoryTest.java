@@ -50,14 +50,14 @@ class AfishaRepositoryTest {
 
     @Test
     public void findById() {
-        Object actual = afishaRepository.findById(3);
+        PurchaseItem actual = afishaRepository.findById(3);
         PurchaseItem expected = third;
         assertEquals(expected, actual);
     }
 
     @Test
     public void findByIdNull() {
-        Object actual = afishaRepository.findById(13);
+        PurchaseItem actual = afishaRepository.findById(13);
         PurchaseItem expected = null;
         assertEquals(expected, actual);
     }

@@ -32,14 +32,10 @@ public class AfishaRepository {
         return reverseResult;//purchaseItem;
     }
 
-    public Object findById(int id) {     // - возвращает объект по идентификатору (либо null, если такого объекта нет)
-        PurchaseItem find = new PurchaseItem();
-        int a = -1;
-        for (PurchaseItem item : this.purchaseItem) {
-            a++;
+    public PurchaseItem findById(int id) {// - возвращает объект по идентификатору (либо null, если такого объекта нет)
+        for (PurchaseItem item : purchaseItem) {
             if (id == item.getId()) {
-                find = purchaseItem[a];
-                return find;
+                return item;
             }
         }
         return null;
