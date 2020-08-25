@@ -7,7 +7,6 @@ import ru.netology.domain.PurchaseItem;
 public class CartManager {
     private int numberLast = 10;
     private PurchaseItem[] items = new PurchaseItem[0];
-    private PurchaseItem[] theLast = new PurchaseItem[0];
 
     public void add(PurchaseItem item) {
         int length = items.length + 1;
@@ -19,52 +18,25 @@ public class CartManager {
     }
 
     public CartManager(int numberLast) {
-        this.numberLast = numberLast;
-
-        PurchaseItem[] temp = new PurchaseItem[0];
-        int last = items.length;       //количество фильмов в ленте
-        if (last <= numberLast) {
-            temp = new PurchaseItem[last];
-            System.arraycopy(items, 0, temp, 0, last);
-        } else {
-            if (numberLast == 10) {
-                temp = new PurchaseItem[10];
-                System.arraycopy(items, last - 10, temp, 0, 10);
-            } else {
-                temp = new PurchaseItem[numberLast];
-                System.arraycopy(items, last - numberLast, temp, 0, numberLast);
-            }
-
+        if (numberLast > 0) {
+            this.numberLast = numberLast;
         }
-        theLast = new PurchaseItem[temp.length];
-        for (int i = 0; i < temp.length; i++) {
-            int index = temp.length - i - 1;
-            theLast[i] = temp[index];
-        }
+
     }
 
-    public void numLast(int numberLast) {
-        this.numberLast = numberLast;
+    public PurchaseItem[] numLastW() {
+        int askedFilms = items.length;   //количество фильмов в ленте
 
-        PurchaseItem[] temp = new PurchaseItem[0];
-        int last = items.length;       //количество фильмов в ленте
-        if (last <= numberLast) {
-            temp = new PurchaseItem[last];
-            System.arraycopy(items, 0, temp, 0, last);
-        } else {
-            if (numberLast == 10) {
-                temp = new PurchaseItem[10];
-                System.arraycopy(items, last - 10, temp, 0, 10);
-            } else {
-                temp = new PurchaseItem[numberLast];
-                System.arraycopy(items, last - numberLast, temp, 0, numberLast);
-            }
+        if (numberLast < items.length) {
+            askedFilms = numberLast;
         }
-        theLast = new PurchaseItem[temp.length];
-        for (int i = 0; i < temp.length; i++) {
-            int index = temp.length - i - 1;
-            theLast[i] = temp[index];
+
+        PurchaseItem[] result = new PurchaseItem[askedFilms];
+        for (int i = 0; i < result.length; i++) {
+            int index = items.length - i - 1;
+            result[i] = items[index];
         }
+        return result;
     }
 
 
